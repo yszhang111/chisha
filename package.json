@@ -1,0 +1,10 @@
+{
+  "name": "chisha",
+  "version": "1.0.0",
+  "private": true,
+  "description": "吃啥：三个轮盘，决定下一顿。",
+  "scripts": {
+    "dev": "node server.mjs",
+    "check": "node --check dist/app.js"
+  }
+}

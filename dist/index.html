@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#284b38">
+  <meta name="description" content="今天吃啥？添加想吃的餐厅，自选日期，勾选午餐晚餐随机，转一转就有答案。">
+  <title>吃啥 · 今天的选择，转一转</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-bowl" viewBox="0 0 24 24"><path d="M3 11h18a9 9 0 0 1-18 0Z"/><path d="M8 21h8M8 3c-2 2 2 3 0 5M13 2c-2 2 2 3 0 5M18 3c-2 2 2 3 0 5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4M17 3v4M3 11h18M8 15h2M14 15h2M8 18h2"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.7 7.3L22 12l-7.3 2.7L12 22l-2.7-7.3L2 12l7.3-2.7Z"/></symbol>
+    <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M20 10a8 8 0 1 0-1 7M20 4v6h-6"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.9 13a9 9 0 0 1-9.9-9.9A9 9 0 1 0 20.9 13Z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v.2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+  </svg>
+
+  <header class="site-header shell">
+    <a class="brand" href="./" aria-label="吃啥首页"><span class="brand-icon"><svg class="icon"><use href="#i-bowl"/></svg></span><span>吃啥<span class="brand-dot">.</span></span><span class="brand-caption">把纠结，留给轮盘。</span></a>
+    <nav><button class="help-button" id="help-open"><svg class="icon"><use href="#i-info"/></svg> 怎么玩</button><span class="header-note"><span></span> 今天也要好好吃饭</span></nav>
+  </header>
+
+  <main class="shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy"><p class="eyebrow"><svg class="icon"><use href="#i-spark"/></svg> 选择困难症的开饭搭子</p><h1 id="page-title">今天吃啥？<span class="hero-line">转一下就<span class="hand-underline">知道</span>。</span></h1><p class="hero-description">喜欢的餐厅放进来，剩下的交给一点点运气。</p></div>
+      <div class="hero-doodle" aria-hidden="true"><span class="doodle-note">LET'S EAT<br>吃饭最大！</span><svg viewBox="0 0 200 150"><path d="M38 68c-8-6-8-19-1-26M54 61c-8-6-8-19-1-26M70 63c-8-6-8-19-1-26" fill="none" stroke="#38553b" stroke-width="3.5" stroke-linecap="round"/><path d="M17 80h102c-2 38-20 53-50 53S19 118 17 80Z" fill="#f4c34b" stroke="#38553b" stroke-width="3.5"/><path d="M34 101c12 5 26 7 40 4M55 141h28" fill="none" stroke="#38553b" stroke-width="3.5" stroke-linecap="round"/><path d="m132 48 45 75m-37-79 45 75" stroke="#38553b" stroke-width="4" stroke-linecap="round"/><path d="m105 19 2 8 8 2-8 2-2 8-2-8-8-2 8-2Z" fill="#e69b75"/><path d="m20 31 2 5 5 2-5 2-2 5-2-5-5-2 5-2Z" fill="#38553b"/></svg><span class="doodle-loop"></span></div>
+    </section>
+
+    <section class="workspace" aria-label="开饭选择器">
+      <aside class="settings">
+        <div class="settings-heading"><div><h2>我的开饭选项</h2><p>你来划范围，好运做决定。</p></div><button id="reset-button" class="text-button" title="清空所有选项">重置</button></div>
+        <form id="options-form" novalidate>
+          <fieldset class="field-block restaurant-field"><legend><span class="step">01</span> 吃什么 <span class="tag required">必填</span><span id="restaurant-count" class="count">0 / 24</span></legend><p class="field-hint" id="restaurant-help">添加你想去的餐厅，一家也可以。</p><div class="restaurant-entry"><input id="restaurant-input" type="text" autocomplete="off" placeholder="输入餐厅名称" maxlength="600" aria-describedby="restaurant-help restaurant-error" aria-label="餐厅名称"><button id="add-restaurant" type="submit" aria-label="添加餐厅"><svg class="icon"><use href="#i-plus"/></svg></button></div><p class="error-text" id="restaurant-error" role="alert" hidden></p><div class="restaurant-tags" id="restaurant-tags" aria-label="已添加的餐厅"></div><div class="suggestions"><span>没灵感？</span><button type="button" data-suggestion="海底捞">＋ 海底捞</button><button type="button" data-suggestion="麦当劳">＋ 麦当劳</button><button type="button" data-suggestion="萨莉亚">＋ 萨莉亚</button></div><p class="entry-hint">回车添加 · 支持用逗号一次添加多家</p></fieldset>
+          <fieldset class="field-block date-field"><legend><span class="step">02</span> 哪天吃 <span class="tag">选填</span></legend><p class="field-hint">挑几个有空的日子，转一个好日子。</p><button class="date-trigger" id="date-trigger" type="button" aria-expanded="false" aria-controls="calendar-panel"><svg class="icon"><use href="#i-calendar"/></svg><span id="date-summary">选择日期，可多选</span><svg class="icon down-chevron"><use href="#i-chevron"/></svg></button><div id="calendar-panel" class="calendar-panel" hidden><div class="calendar-heading"><button type="button" id="prev-month" class="icon-button" aria-label="上个月"><svg class="icon prev"><use href="#i-chevron"/></svg></button><strong id="calendar-month"></strong><button type="button" id="next-month" class="icon-button" aria-label="下个月"><svg class="icon"><use href="#i-chevron"/></svg></button></div><div class="weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div class="calendar-grid" id="calendar-grid" role="group" aria-label="选择日期"></div><div class="calendar-footer"><button id="clear-dates" type="button" class="text-button">清空日期</button><button id="calendar-done" type="button" class="small-button">选好了</button></div></div><div id="date-chips" class="date-chips"></div></fieldset>
+          <fieldset class="field-block meal-field"><legend><span class="step">03</span> 午餐还是晚餐 <span class="tag">选填</span></legend><label class="meal-toggle" for="random-meal"><span class="meal-symbols"><svg class="icon"><use href="#i-sun"/></svg><svg class="icon"><use href="#i-moon"/></svg></span><span class="meal-toggle-copy"><strong>这顿也随机</strong><small>在午餐和晚餐之间转一个</small></span><input type="checkbox" id="random-meal"><span class="custom-check"><svg class="icon"><use href="#i-check"/></svg></span></label></fieldset>
+        </form>
+        <div class="save-note"><span class="status-dot"></span><span id="save-message">选项自动保存在当前浏览器</span></div>
+      </aside>
+
+      <div class="playground" id="playground">
+        <div class="playground-heading"><div><p class="section-eyebrow">A LITTLE SPIN, A HAPPY MEAL</p><h2 id="stage-title">把「随便」变成一顿好饭</h2></div><span class="active-pill" id="active-count"><span></span> 等你添加</span></div>
+        <div class="empty-state" id="empty-state">
+          <div class="empty-illustration" aria-hidden="true"><svg viewBox="0 0 400 240"><ellipse cx="200" cy="206" rx="137" ry="15" fill="#e7e9dd"/><path d="M74 178c0-38 57-69 126-69s126 31 126 69-57 36-126 36-126 2-126-36Z" fill="#f6f3e5" stroke="#36553e" stroke-width="2.5"/><ellipse cx="200" cy="170" rx="111" ry="37" fill="#e0e7d5" stroke="#36553e" stroke-width="2.5"/><path d="m119 146 43-69c7-11 18-11 25 0l43 69c7 12 1 22-13 22h-85c-14 0-20-10-13-22Z" fill="#fffdf2" stroke="#36553e" stroke-width="2.5"/><path d="M157 132h36v37h-36Z" fill="#36553e"/><path d="m148 110 2-3m35 11 2-3m-17-18 2-3m29 33 2-3m-66 13 2-3" stroke="#c1c9af" stroke-width="3" stroke-linecap="round"/><path d="M225 133c-3-17 12-32 26-26 16-11 31 0 29 14 16 4 20 23 7 32-4 17-24 20-35 10-22 8-41-11-27-30Z" fill="#fcfaf0" stroke="#36553e" stroke-width="2.5"/><circle cx="255" cy="137" r="17" fill="#f4c34b"/><path d="M244 135c0-5 4-8 8-8" stroke="#fff2b4" stroke-width="3" fill="none" stroke-linecap="round"/><path d="m103 169-12-30m9 6c-18 1-25-17-12-22-5-14 13-24 21-13 14-9 25 5 17 15 11 11-4 25-16 17" fill="#8ea17b" stroke="#36553e" stroke-width="2.5" stroke-linecap="round"/><path d="m287 165 23-5m-17-9 19 2" stroke="#e49672" stroke-width="8" stroke-linecap="round"/><path d="m320 79 14 79m-6-81 14 79" stroke="#36553e" stroke-width="4" stroke-linecap="round"/><path d="m88 68 3 9 9 3-9 3-3 9-3-9-9-3 9-3Z" fill="#e5ae68"/><path d="m292 56 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z" fill="#8ea17b"/><path d="M200 52c-9-12 10-14 1-25m22 31c-9-12 10-14 1-25" fill="none" stroke="#bbc3ad" stroke-width="2.5" stroke-linecap="round"/></svg><span class="floating-word">好好吃饭</span></div>
+          <h3>好吃的，正在等一个决定</h3><p>先在左边加上想去的餐厅<br>你的专属轮盘就会出现在这里。</p><button class="empty-start" id="empty-start">添加第一家餐厅 <svg class="icon"><use href="#i-arrow"/></svg></button>
+        </div>
+        <div class="wheels" id="wheels" hidden>
+          <article class="wheel-unit restaurant-wheel" id="restaurant-wheel" hidden><div class="wheel-label"><span class="wheel-label-icon"><svg class="icon"><use href="#i-bowl"/></svg></span><h3>吃什么</h3><span class="wheel-option-count" id="restaurant-options-count"></span></div><div class="wheel-shell"><div class="wheel-pointer"></div><div class="wheel-rotor" id="restaurant-rotor"></div><div class="wheel-hub"><svg class="icon"><use href="#i-bowl"/></svg></div></div><p class="wheel-caption" id="restaurant-caption">好味道，转出来</p></article>
+          <article class="wheel-unit date-wheel" id="date-wheel" hidden><div class="wheel-label"><span class="wheel-label-icon"><svg class="icon"><use href="#i-calendar"/></svg></span><h3>哪天吃</h3><span class="wheel-option-count" id="date-options-count"></span></div><div class="wheel-shell"><div class="wheel-pointer"></div><div class="wheel-rotor" id="date-rotor"></div><div class="wheel-hub"><svg class="icon"><use href="#i-calendar"/></svg></div></div><p class="wheel-caption" id="date-caption">选个好日子</p></article>
+          <article class="wheel-unit meal-wheel" id="meal-wheel" hidden><div class="wheel-label"><span class="wheel-label-icon"><svg class="icon"><use href="#i-sun"/></svg></span><h3>哪顿吃</h3><span class="wheel-option-count">2 个选项</span></div><div class="wheel-shell"><div class="wheel-pointer"></div><div class="wheel-rotor" id="meal-rotor"></div><div class="wheel-hub"><svg class="icon"><use href="#i-sun"/></svg></div></div><p class="wheel-caption" id="meal-caption">日光或月光，都配好饭</p></article>
+        </div>
+        <div class="result" id="result" role="status" aria-live="polite" hidden><span class="result-icon"><svg class="icon"><use href="#i-spark"/></svg></span><div><p>就这么愉快地决定了</p><h3 id="result-title"></h3><span id="result-meta"></span></div><button class="copy-button" id="copy-result" aria-label="复制开饭结果">复制结果</button></div>
+        <div class="spin-area"><p class="spin-hint" id="spin-hint"><svg class="icon"><use href="#i-info"/></svg> 只转已设置的轮盘，没填的就留白。</p><button class="spin-button" id="spin-button"><svg class="icon"><use href="#i-rotate"/></svg><span id="spin-label">转一转，开饭！</span><svg class="icon spin-arrow"><use href="#i-arrow"/></svg></button><p class="spin-footnote" id="spin-footnote">先添加至少一家餐厅，就可以开始啦</p></div>
+        <div class="confetti" id="confetti" aria-hidden="true"></div>
+      </div>
+    </section>
+    <div class="under-note"><span class="tiny-star">✳</span><p>小小的选择，交给随机。大大的快乐，记得认真享受。</p><span class="under-note-right">少一点纠结，多一点好胃口。</span></div>
+  </main>
+  <footer class="site-footer shell"><a class="footer-brand" href="./">吃啥.</a><p>人生大事，好好吃饭。</p><span>MADE FOR YOUR NEXT MEAL</span></footer>
+  <dialog id="help-dialog"><div class="dialog-top"><span class="dialog-icon"><svg class="icon"><use href="#i-bowl"/></svg></span><button id="help-close" class="icon-button" aria-label="关闭使用说明"><svg class="icon"><use href="#i-close"/></svg></button></div><p class="section-eyebrow">HOW TO EAT HAPPILY</p><h2>三步，解决吃啥。</h2><ol><li><strong>添加餐厅</strong><p>输入餐厅名称，按回车或点击加号。多家餐厅可以用逗号、顿号或换行分隔，最多 24 家。</p></li><li><strong>加一点条件，看你心情</strong><p>在日历里多选候选日期；勾选「这顿也随机」，即可在午餐和晚餐中抽选。没设置的轮盘直接隐藏。</p></li><li><strong>转一转，开饭</strong><p>所有已设置的轮盘会一起转动，每个选项机会均等。转完可以复制结果，或再转一次。</p></li></ol><button class="small-button dialog-done" id="help-done">知道啦，去开饭</button></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
