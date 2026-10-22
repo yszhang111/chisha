@@ -9,12 +9,12 @@
     <view class="hero-copy">
       <text class="eyebrow">✳ 选择困难症的开饭搭子</text>
       <view class="hero-title">今天吃啥？<view>转一下就<text class="underline">知道</text>。</view></view>
-      <text class="hero-subtitle">喜欢的餐厅放进来，剩下的交给好运。</text>
+      <text class="hero-subtitle">喜欢的餐厅放进来，转一下就有答案。</text>
     </view>
     <image class="hero-avatar" src="/assets/avatar.png" mode="aspectFill" aria-label="吃啥笑脸饭碗" />
   </view>
   <view class="settings card" id="settings">
-    <view class="card-heading"><view><text class="card-title">我的开饭选项</text><text class="card-subtitle">你来划范围，好运做决定。</text></view><button class="text-button" bindtap="resetOptions" disabled="{{spinning}}">重置</button></view>
+    <view class="card-heading"><view><text class="card-title">我的开饭选项</text><text class="card-subtitle">你来划范围，轮盘做决定。</text></view><button class="text-button" bindtap="resetOptions" disabled="{{spinning}}">重置</button></view>
     <view class="field restaurant-field">
       <view class="field-title"><text class="step">01</text><text>吃什么</text><text class="tag required">必填</text><text class="field-count">{{restaurants.length}} / 24</text></view>
       <text class="field-hint">添加你想去的餐厅，一家也可以。</text>
@@ -31,7 +31,7 @@
     </view>
     <view class="field">
       <view class="field-title"><text class="step">02</text><text>哪天吃</text><text class="tag">选填</text></view>
-      <text class="field-hint">挑几个有空的日子，转一个好日子。</text>
+      <text class="field-hint">选几个有空的日子，决定哪天吃。</text>
       <button class="date-button {{dates.length ? 'has-dates' : ''}} {{showCalendar ? 'is-open' : ''}}" bindtap="openCalendar" disabled="{{spinning}}"><view class="calendar-icon"><view></view><text>日</text></view><text>{{dates.length ? '已选 ' + dates.length + ' 个候选日期' : '选择日期，可多选'}}</text><text class="chevron">›</text></button>
       <view wx:if="{{showCalendar}}" class="inline-calendar" id="inline-calendar">
         <view class="calendar-nav"><button class="month-arrow" data-direction="-1" bindtap="changeMonth" disabled="{{!calendar.canPrev}}" aria-label="上个月">‹</button><text>{{calendar.title}}</text><button class="month-arrow" data-direction="1" bindtap="changeMonth" disabled="{{!calendar.canNext}}" aria-label="下个月">›</button></view>
@@ -53,7 +53,7 @@
     <view class="save-note"><view class="status-dot"></view><text>{{saveMessage}}</text></view>
   </view>
   <view class="stage" id="wheel-stage">
-    <view class="stage-heading"><view><text class="stage-eyebrow">A LITTLE SPIN, A HAPPY MEAL</text><text class="stage-title">{{wheels.length ? '这一顿，让好运安排' : '把「随便」变成一顿好饭'}}</text></view><text wx:if="{{wheels.length}}" class="active-pill">{{wheels.length}} 个轮盘就绪</text></view>
+    <view class="stage-heading"><view><text class="stage-eyebrow">A LITTLE SPIN, A HAPPY MEAL</text><text class="stage-title">{{wheels.length ? '这一顿，让轮盘来选' : '把「随便」变成一顿好饭'}}</text></view><text wx:if="{{wheels.length}}" class="active-pill">{{wheels.length}} 个轮盘就绪</text></view>
     <view wx:if="{{!wheels.length}}" class="empty-stage">
       <image src="/assets/avatar.png" mode="aspectFit" class="empty-avatar" />
       <text class="empty-title">好吃的，等一个决定</text>
@@ -64,7 +64,7 @@
       <view wx:for="{{wheels}}" wx:key="type" class="wheel-block wheel-{{item.type}} {{item.size > 300 ? 'wheel-large' : 'wheel-small'}}">
         <view class="wheel-label"><text class="wheel-dot"></text><text>{{item.title}}</text><text class="wheel-count">{{item.items.length}} 个选项</text></view>
         <roulette id="wheel-{{item.type}}" items="{{item.items}}" type="{{item.type}}" title="{{item.title}}" size="{{item.size}}" />
-        <text class="wheel-caption {{item.picked ? 'picked' : ''}}">{{spinning ? '转呀转，好运来…' : item.picked || item.caption}}</text>
+        <text class="wheel-caption {{item.picked ? 'picked' : ''}}">{{spinning ? '轮盘转动中…' : item.picked || item.caption}}</text>
       </view>
     </view>
     <view wx:if="{{result}}" class="result-card" id="result-card" aria-live="polite">
@@ -77,7 +77,7 @@
   <view class="footer"><text class="footer-brand">吃啥.</text><text>人生大事，好好吃饭。</text></view>
 </view>
 </scroll-view>
-  <view class="bottom-bar"><view class="bottom-inner"><view class="bottom-copy"><text>{{spinning ? '好运正在安排' : wheels.length ? wheels.length + ' 个轮盘已就绪' : '下一顿，吃点好的'}}</text><text class="bottom-hint">{{restaurants.length ? restaurants.length + ' 家餐厅等你选' : '先添加一家餐厅吧'}}</text></view><button class="spin-button {{!restaurants.length ? 'muted' : ''}}" bindtap="spin" disabled="{{spinning}}" loading="{{spinning}}">{{spinning ? '转呀转…' : hasResult ? '再转一次 ↻' : '转一转，开饭！'}}</button></view></view>
+  <view class="bottom-bar"><view class="bottom-inner"><view class="bottom-copy"><text>{{spinning ? '正在转动' : wheels.length ? wheels.length + ' 个轮盘已就绪' : '下一顿，吃点好的'}}</text><text class="bottom-hint">{{restaurants.length ? restaurants.length + ' 家餐厅等你选' : '先添加一家餐厅吧'}}</text></view><button class="spin-button {{!restaurants.length ? 'muted' : ''}}" bindtap="spin" disabled="{{spinning}}" loading="{{spinning}}">{{spinning ? '正在转动…' : hasResult ? '再转一次 ↻' : '转一转，开饭！'}}</button></view></view>
 </view>
 <root-portal>
   <view wx:if="{{showHelp}}" class="sheet-mask" catchtouchmove="stopEvent" bindtap="closeHelp">

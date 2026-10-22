@@ -198,6 +198,7 @@ Page({
   openHelp() { this.setData({ showHelp: true, inputFocus: false }); },
   closeHelp() { this.setData({ showHelp: false }); },
   onShareAppMessage() {
-    return { title: this.data.result ? `${this.data.result.restaurant}，就这么愉快地决定了！你也来转转？` : '今天吃啥？转一下就知道。', path: '/pages/index/index', imageUrl: '/assets/avatar.png' };
+    // Omit imageUrl so WeChat captures the page for the share card.
+    return { title: this.data.result ? `${this.data.result.restaurant}，就这么愉快地决定了！你也来转转？` : '今天吃啥？转一下就知道。', path: '/pages/index/index' };
   },
 });

@@ -92,7 +92,7 @@ function toggleDate(selected, key, now) {
 function wheelDescriptors(options) {
   const result = [];
   if (options.restaurants.length) result.push({ type: 'restaurant', title: '吃什么', caption: '好味道，转出来', items: options.restaurants.map(name => ({ value: name, label: name })) });
-  if (options.dates.length) result.push({ type: 'date', title: '哪天吃', caption: '选个好日子', items: options.dates.map(key => ({ value: key, label: `${fromKey(key).getMonth() + 1}/${fromKey(key).getDate()}` })) });
+  if (options.dates.length) result.push({ type: 'date', title: '哪天吃', caption: '决定哪天吃', items: options.dates.map(key => ({ value: key, label: `${fromKey(key).getMonth() + 1}/${fromKey(key).getDate()}` })) });
   if (options.mealEnabled) result.push({ type: 'meal', title: '哪顿吃', caption: '午餐和晚餐，选一个', items: [{ value: '午餐', label: '午餐' }, { value: '晚餐', label: '晚餐' }] });
   return result;
 }

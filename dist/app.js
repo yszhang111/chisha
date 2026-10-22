@@ -87,7 +87,7 @@
       $(`${type}-caption`).classList.remove('has-result');
     }
     $('restaurant-caption').textContent = '好味道，转出来';
-    $('date-caption').textContent = '选个好日子';
+    $('date-caption').textContent = '决定哪天吃';
     $('meal-caption').textContent = '日光或月光，都配好饭';
   }
 
@@ -162,7 +162,7 @@
       if (key === toKey(today)) button.setAttribute('aria-current', 'date');
       button.addEventListener('click', () => {
         if (spinning) return;
-        if (!selected && dates.length >= MAX_DATES) { showToast(`最多选 ${MAX_DATES} 个日期，给好运留一点空间。`); return; }
+        if (!selected && dates.length >= MAX_DATES) { showToast(`最多选择 ${MAX_DATES} 个候选日期。`); return; }
         if (selected) dates = dates.filter(v => v !== key);
         else dates = [...dates, key].sort();
         change();
@@ -265,7 +265,7 @@
     $('wheels').dataset.count = active;
     $('empty-state').hidden = active > 0;
     $('active-count').lastChild.textContent = active ? ` ${active} 个轮盘就绪` : ' 等你添加';
-    $('stage-title').textContent = active ? '这一顿，让好运安排' : '把「随便」变成一顿好饭';
+    $('stage-title').textContent = active ? '这一顿，让轮盘来选' : '把「随便」变成一顿好饭';
     $('restaurant-options-count').textContent = `${restaurants.length} 个选项`;
     $('date-options-count').textContent = `${dates.length} 个选项`;
     $('spin-button').classList.toggle('is-empty', !restaurants.length);
@@ -356,7 +356,7 @@
     $('calendar-panel').hidden = true;
     $('date-trigger').setAttribute('aria-expanded', 'false');
     $('result').hidden = true;
-    $('spin-label').textContent = '好运正在安排…';
+    $('spin-label').textContent = '正在转动…';
     const all = choices();
     const picked = {};
     const animations = [];
@@ -364,7 +364,7 @@
     lock(true);
     for (const type of Object.keys(all)) {
       if (!all[type].length) continue;
-      $(`${type}-caption`).textContent = '转呀转，好运来…';
+      $(`${type}-caption`).textContent = '轮盘转动中…';
       $(`${type}-caption`).classList.remove('has-result');
       animations.push(animateWheel(type, reducedMotion).then(angle => {
         const pointerAngle = ((-angle % 360) + 360) % 360;
