@@ -281,12 +281,10 @@
     save();
   }
 
-  function randomIndex(length) {
-    // Rejection sampling keeps every sector equally likely.
+  function randomUnit() {
     const buffer = new Uint32Array(1);
-    const limit = Math.floor(0x100000000 / length) * length;
-    do { crypto.getRandomValues(buffer); } while (buffer[0] >= limit);
-    return buffer[0] % length;
+    crypto.getRandomValues(buffer);
+    return buffer[0] / 0x100000000;
   }
 
   function lock(value) {
@@ -299,14 +297,15 @@
     $('spin-button').setAttribute('aria-busy', String(value));
   }
 
-  function animateWheel(type, selected, count, duration) {
+  function animateWheel(type, reducedMotion) {
     const rotor = $(`${type}-rotor`);
-    // Every sector begins at twelve o'clock. Its center must land under the fixed pointer.
-    const targetAngle = (360 - (selected + .5) * (360 / count)) % 360;
-    const currentNormalized = ((angles[type] % 360) + 360) % 360;
-    const delta = (targetAngle - currentNormalized + 360) % 360;
-    angles[type] += 360 * 5 + delta;
-    rotor.style.transition = `transform ${duration}ms cubic-bezier(.13,.68,.11,1)`;
+    // Run-out and speed are independent of the items drawn on the wheel.
+    const distance = 360 * (4 + 3 * randomUnit());
+    const speed = 1080 + 360 * randomUnit();
+    const duration = reducedMotion ? 10 : Math.round(2000 * distance / speed);
+    angles[type] += distance;
+    // This curve follows constant deceleration: progress = 2t - t².
+    rotor.style.transition = `transform ${duration}ms cubic-bezier(.333333,.666667,.666667,1)`;
     rotor.style.transform = `rotate(${angles[type]}deg)`;
     return new Promise(resolve => {
       let done = false;
@@ -316,7 +315,8 @@
         done = true;
         clearTimeout(timeout);
         rotor.removeEventListener('transitionend', onEnd);
-        resolve();
+        const matrix = new DOMMatrixReadOnly(getComputedStyle(rotor).transform);
+        resolve(Math.atan2(matrix.b, matrix.a) * 180 / Math.PI);
       };
       const onEnd = event => { if (event.propertyName === 'transform') finish(); };
       rotor.addEventListener('transitionend', onEnd);
@@ -362,15 +362,15 @@
     const animations = [];
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     lock(true);
-    let wheel = 0;
     for (const type of Object.keys(all)) {
       if (!all[type].length) continue;
-      const index = randomIndex(all[type].length);
-      picked[type] = all[type][index].value;
       $(`${type}-caption`).textContent = '转呀转，好运来…';
       $(`${type}-caption`).classList.remove('has-result');
-      animations.push(animateWheel(type, index, all[type].length, reducedMotion ? 10 : 3300 + wheel * 350));
-      wheel++;
+      animations.push(animateWheel(type, reducedMotion).then(angle => {
+        const pointerAngle = ((-angle % 360) + 360) % 360;
+        const index = Math.min(all[type].length - 1, Math.floor(pointerAngle / (360 / all[type].length)));
+        picked[type] = all[type][index].value;
+      }));
     }
     await Promise.all(animations);
     $('result-title').textContent = picked.restaurant;

@@ -1,0 +1,8 @@
+<view class="roulette" style="width: {{size}}rpx; height: {{size}}rpx;" aria-role="img" aria-label="{{title}}轮盘，共{{items.length}}个选项">
+  <image wx:if="{{wheelImage}}" class="wheel-image" src="{{wheelImage}}" mode="aspectFit" style="transform: rotate({{rotationAngle}}deg); transition: transform {{rotationDuration}}ms cubic-bezier(.333333,.666667,.666667,1);" bindtransitionend="onTransitionEnd" />
+  <view class="wheel-hub" style="background: {{rim}}; color: {{ink}}; font-size: {{size * 18 / 280}}rpx;"><view>{{mark}}</view></view>
+  <view class="wheel-pointer" style="border-left-width: {{size * 12 / 280}}rpx; border-right-width: {{size * 12 / 280}}rpx; border-top-width: {{size * 28 / 280}}rpx; border-top-color: {{ink}};"></view>
+  <view wx:if="{{canvasError}}" class="canvas-error"><text>轮盘暂时未加载</text><button bindtap="retryCanvas">点此重试</button></view>
+</view>
+<!-- Drawing happens outside the viewport. Only an ordinary image is shown. -->
+<canvas class="bitmap-canvas" id="wheel-canvas" type="2d"></canvas>

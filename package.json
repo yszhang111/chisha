@@ -5,6 +5,7 @@
   "description": "吃啥：三个轮盘，决定下一顿。",
   "scripts": {
     "dev": "node server.mjs",
-    "check": "node --check dist/app.js"
+    "check": "node scripts/check.mjs",
+    "test": "node --test"
   }
 }

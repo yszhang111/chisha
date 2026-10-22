@@ -3,3 +3,5 @@ node_modules/
 *.log
 *.tar.gz
 *.tgz
+miniprogram/project.private.config.json
+artifacts/

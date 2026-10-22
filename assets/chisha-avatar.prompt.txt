@@ -1,0 +1,4 @@
+Tool: built-in image_gen image editing
+Output: chisha-avatar.png
+
+Edit the provided 吃啥 app-avatar image with one precise change: completely REMOVE both yellow chopsticks currently sticking upward out of the rice on the right. Restore the removed area naturally with the same plain warm-cream background, and seamlessly reconstruct the fluffy rice outline where the chopsticks entered. Do not move or add chopsticks anywhere else. Preserve everything else: the deep forest-green bowl mascot, cream eyes and smiling mouth, golden egg yolk, white rice, orange question mark above, square composition, hand-painted illustration style, original colors and background. Keep the entire image fully opaque. No utensils, no new objects, no words or watermark. Deliver a finished PNG.

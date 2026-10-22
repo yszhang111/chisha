@@ -1,0 +1,4 @@
+{
+  "desc": "吃啥：开饭选择器首页。",
+  "rules": [{ "action": "allow", "page": "pages/index/index" }]
+}

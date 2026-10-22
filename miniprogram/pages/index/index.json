@@ -1,0 +1,5 @@
+{
+  "navigationBarTitleText": "吃啥 · 好好吃饭",
+  "disableScroll": true,
+  "usingComponents": { "roulette": "/components/roulette/index" }
+}

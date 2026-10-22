@@ -1,0 +1,12 @@
+{
+  "pages": ["pages/index/index"],
+  "window": {
+    "navigationBarTitleText": "吃啥",
+    "navigationBarBackgroundColor": "#f7f7ef",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f7ef",
+    "backgroundTextStyle": "dark"
+  },
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
